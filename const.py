@@ -1,0 +1,9 @@
+DOMAIN = "evlink_modbus"
+
+CONF_HOST = "host"
+CONF_PORT = "port"
+CONF_SLAVE_ID = "slave_id"
+
+DEFAULT_HOST = "192.168.1.100"
+DEFAULT_PORT = 502
+DEFAULT_SLAVE_ID = 255

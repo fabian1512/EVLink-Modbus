@@ -1,0 +1,11 @@
+{
+  "title": "Schneider EVlink Pro AC",
+  "config": {
+    "step": {
+      "user": {
+        "title": "EVlink-Modbus konfigurieren",
+        "description": "Gib die IP-Adresse und den Port deines EVlink-Ladegeräts ein."
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "title": "EVLink Modbus Integration",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configure EVLink Modbus",
+        "description": "Enter your EVLink Modbus connection details"
+      }
+    }
+  }
+}
