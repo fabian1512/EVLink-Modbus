@@ -105,7 +105,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     sensors = [
         EVLinkPowerSensor(client, slave_id),
         EVLinkEnergySensor(client, slave_id),
-        EVLinkEnabledSensor(client, slave_id),
         EVLinkFaultSensor(client, slave_id),
         EVLinkCurrentL1Sensor(client, slave_id),
         EVLinkCurrentL2Sensor(client, slave_id),
