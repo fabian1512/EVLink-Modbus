@@ -4,9 +4,7 @@
   "version": "1.0.1",
   "requirements": ["pymodbus==3.1.0"],
   "config_flow": true,
-  "codeowners": ["@deinGitHubBenutzername"],
-  "documentation": "https://github.com/deinRepo/evlink_modbus",
-  "iot_class": "local_polling",
-  "logo": "custom_components/evlink_modbus/logo.png",
-  "icon": "custom_components/evlink_modbus/icon.png"
+  "codeowners": ["@dfabian1512"],
+  "documentation": "https://github.com/fabian1512/EVLink-Modbus",
+  "iot_class": "local_polling"
 }
