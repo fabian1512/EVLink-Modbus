@@ -1,7 +1,7 @@
 {
   "domain": "evlink_modbus",
   "name": "EVLink Modbus",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "requirements": ["pymodbus==3.1.0"],
   "config_flow": true,
   "codeowners": ["@dfabian1512"],

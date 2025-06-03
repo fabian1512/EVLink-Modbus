@@ -61,8 +61,8 @@ LAST_STOP_CAUSE_MAP = {
 }
 
 OCPP_STATUS_MAP = {
-    0: "Unbekannt",
-    1: "Verfügbar",
+    0: "Kein Fahrzeug verbunden",
+    1: "Verfügbar",  
     2: "Vorbereitet",
     3: "Besetzt",
     4: "Fehler",
@@ -81,12 +81,12 @@ OCPP_STATUS_MAP = {
 SCHNEIDER_REG_EV_STATE_MAP = {
     0: "Kein Fahrzeug verbunden",
     1: "Kein Fahrzeug verbunden",  # Optional: Falls du State F auch als "kein Fahrzeug" sehen willst, sonst entferne diese Zeile
-    2: "Fahrzeug verbunden",
+    2: "Kein Fahrzeug verbunden",
     3: "Fahrzeug verbunden",
     4: "Fahrzeug verbunden",
     5: "Fahrzeug verbunden",
-    6: "Fahrzeug lädt",
-    7: "Fahrzeug lädt",
+    6: "Kein Fahrzeug verbunden",
+    7: "Fahrzeug verbunden",
     8: "Fahrzeug lädt",
     9: "Fahrzeug lädt",
     10: "Fehler/ungültig",
