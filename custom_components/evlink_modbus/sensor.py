@@ -1,9 +1,21 @@
-import logging
-from datetime import timedelta
-from pymodbus.client import AsyncModbusTcpClient
-from pymodbus.constants import Endian
-from pymodbus.payload import BinaryPayloadDecoder
+import sys
+import os
 
+# Vendor-Pfad FÜR pymodbus GANZ OBEN setzen!
+vendor_path = os.path.join(
+    os.path.dirname(__file__),
+    "vendor", "pymodbus", "pymodbus-3.6.9"
+)
+if vendor_path not in sys.path:
+    sys.path.insert(0, vendor_path)
+
+import pymodbus
+import logging
+#_LOGGER = logging.getLogger(__name__)
+#_LOGGER.error(f"pymodbus loaded from: {getattr(pymodbus, '__file__', 'unknown')}")
+#_LOGGER.error(f"pymodbus version: {getattr(pymodbus, '__version__', 'unknown')}")
+
+from datetime import timedelta
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.const import (
     UnitOfEnergy,
@@ -18,6 +30,10 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 
 from .const import DOMAIN, CONF_HOST, CONF_PORT, CONF_SLAVE_ID
+
+from pymodbus.client import AsyncModbusTcpClient
+from pymodbus.constants import Endian
+from pymodbus.payload import BinaryPayloadDecoder
 
 _LOGGER = logging.getLogger(__name__)
 SCAN_INTERVAL = timedelta(seconds=30)
@@ -155,7 +171,7 @@ class EVLinkPowerSensor(SensorEntity):
             if rr.isError():
                 _LOGGER.error("Modbus error reading power")
                 return
-            decoder = BinaryPayloadDecoder.fromRegisters(rr.registers, byteorder=Endian.Big, wordorder=Endian.Little)
+            decoder = BinaryPayloadDecoder.fromRegisters(rr.registers, byteorder=Endian.BIG, wordorder=Endian.LITTLE)
             value = decoder.decode_32bit_float()
             self._state = round(value * 1000, 2)  # Keine Division mehr, da jetzt Watt
             _LOGGER.debug(f"Power read from Modbus: {self._state} W")
@@ -189,7 +205,7 @@ class EVLinkEnergySensor(SensorEntity):
             if rr.isError():
                 _LOGGER.error("Modbus error reading total energy")
                 return
-            decoder = BinaryPayloadDecoder.fromRegisters(rr.registers, byteorder=Endian.Big, wordorder=Endian.Little)
+            decoder = BinaryPayloadDecoder.fromRegisters(rr.registers, byteorder=Endian.BIG, wordorder=Endian.LITTLE)
             value = decoder.decode_64bit_uint()
             self._state = round(value / 1000, 2)
             _LOGGER.debug(f"Total energy read from Modbus: {self._state} kWh")
@@ -255,7 +271,7 @@ class EVLinkCurrentL1Sensor(SensorEntity):
             if rr.isError():
                 _LOGGER.error("Modbus error reading current L1")
                 return
-            decoder = BinaryPayloadDecoder.fromRegisters(rr.registers, byteorder=Endian.Big, wordorder=Endian.Little)
+            decoder = BinaryPayloadDecoder.fromRegisters(rr.registers, byteorder=Endian.BIG, wordorder=Endian.LITTLE)
             value = decoder.decode_32bit_float()
             self._state = round(value, 2)
         except Exception as e:
@@ -288,7 +304,7 @@ class EVLinkCurrentL2Sensor(SensorEntity):
             if rr.isError():
                 _LOGGER.error("Modbus error reading current L2")
                 return
-            decoder = BinaryPayloadDecoder.fromRegisters(rr.registers, byteorder=Endian.Big, wordorder=Endian.Little)
+            decoder = BinaryPayloadDecoder.fromRegisters(rr.registers, byteorder=Endian.BIG, wordorder=Endian.LITTLE)
             value = decoder.decode_32bit_float()
             self._state = round(value, 2)
         except Exception as e:
@@ -321,7 +337,7 @@ class EVLinkCurrentL3Sensor(SensorEntity):
             if rr.isError():
                 _LOGGER.error("Modbus error reading current L3")
                 return
-            decoder = BinaryPayloadDecoder.fromRegisters(rr.registers, byteorder=Endian.Big, wordorder=Endian.Little)
+            decoder = BinaryPayloadDecoder.fromRegisters(rr.registers, byteorder=Endian.BIG, wordorder=Endian.LITTLE)
             value = decoder.decode_32bit_float()
             self._state = round(value, 2)
         except Exception as e:
@@ -354,7 +370,7 @@ class EVLinkCurrentSumSensor(SensorEntity):
             if rr.isError():
                 _LOGGER.error("Modbus error reading current sum")
                 return
-            decoder = BinaryPayloadDecoder.fromRegisters(rr.registers, byteorder=Endian.Big, wordorder=Endian.Little)
+            decoder = BinaryPayloadDecoder.fromRegisters(rr.registers, byteorder=Endian.BIG, wordorder=Endian.LITTLE)
             value = decoder.decode_32bit_float()
             self._state = round(value, 2)
         except Exception as e:
@@ -387,7 +403,7 @@ class EVLinkVoltageL1Sensor(SensorEntity):
             if rr.isError():
                 _LOGGER.error("Modbus error reading voltage L1")
                 return
-            decoder = BinaryPayloadDecoder.fromRegisters(rr.registers, byteorder=Endian.Big, wordorder=Endian.Little)
+            decoder = BinaryPayloadDecoder.fromRegisters(rr.registers, byteorder=Endian.BIG, wordorder=Endian.LITTLE)
             value = decoder.decode_32bit_float()
             self._state = round(value, 1)
         except Exception as e:
@@ -420,7 +436,7 @@ class EVLinkVoltageL2Sensor(SensorEntity):
             if rr.isError():
                 _LOGGER.error("Modbus error reading voltage L2")
                 return
-            decoder = BinaryPayloadDecoder.fromRegisters(rr.registers, byteorder=Endian.Big, wordorder=Endian.Little)
+            decoder = BinaryPayloadDecoder.fromRegisters(rr.registers, byteorder=Endian.BIG, wordorder=Endian.LITTLE)
             value = decoder.decode_32bit_float()
             self._state = round(value, 1)
         except Exception as e:
@@ -453,7 +469,7 @@ class EVLinkVoltageL3Sensor(SensorEntity):
             if rr.isError():
                 _LOGGER.error("Modbus error reading voltage L3")
                 return
-            decoder = BinaryPayloadDecoder.fromRegisters(rr.registers, byteorder=Endian.Big, wordorder=Endian.Little)
+            decoder = BinaryPayloadDecoder.fromRegisters(rr.registers, byteorder=Endian.BIG, wordorder=Endian.LITTLE)
             value = decoder.decode_32bit_float()
             self._state = round(value, 1)
         except Exception as e:
