@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "config_flow": true,
   "codeowners": ["@fabian1512"],
+   "integration_type": "service",
   "documentation": "https://github.com/fabian1512/EVLink-Modbus",
   "iot_class": "local_polling"
 }
