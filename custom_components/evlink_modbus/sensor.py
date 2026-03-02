@@ -11,9 +11,9 @@ if vendor_path not in sys.path:
 
 import pymodbus
 import logging
-#_LOGGER = logging.getLogger(__name__)
-#_LOGGER.error(f"pymodbus loaded from: {getattr(pymodbus, '__file__', 'unknown')}")
-#_LOGGER.error(f"pymodbus version: {getattr(pymodbus, '__version__', 'unknown')}")
+_LOGGER = logging.getLogger(__name__)
+_LOGGER.debug(f"pymodbus loaded from: {getattr(pymodbus, '__file__', 'unknown')}")
+_LOGGER.debug(f"pymodbus version: {getattr(pymodbus, '__version__', 'unknown')}")
 
 from datetime import timedelta
 from homeassistant.components.sensor import SensorEntity
@@ -371,8 +371,12 @@ class EVLinkCurrentSumSensor(SensorEntity):
                 _LOGGER.error("Modbus error reading current sum")
                 return
             decoder = BinaryPayloadDecoder.fromRegisters(rr.registers, byteorder=Endian.BIG, wordorder=Endian.LITTLE)
+            import math
             value = decoder.decode_32bit_float()
-            self._state = round(value, 2)
+            if math.isnan(value) or math.isinf(value):
+                self._state = 0.0
+            else:
+                self._state = round(value, 2)
         except Exception as e:
             _LOGGER.exception(f"Exception during current sum read: {e}")
 
